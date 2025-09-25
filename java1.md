@@ -20,7 +20,7 @@
 | head -n 文件名稱                | 查看文件前 n 行                 |
 | tail -n 文件名稱                | 查看文件後 n 行                 |
 
-![188842_0](C:\Users\USER\Downloads\188842_0.jpg)
+<img src="C:\Users\USER\Downloads\188842_0.jpg" alt="188842_0" style="zoom:80%;" />
 
 ### **2. 使用者與權限管理**
 
