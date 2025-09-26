@@ -20,7 +20,7 @@
 | head -n 文件名稱                | 查看文件前 n 行                 |
 | tail -n 文件名稱                | 查看文件後 n 行                 |
 
-<img src="C:\Users\USER\Downloads\188842_0.jpg" alt="188842_0" style="zoom:80%;" />
+![188842_0.jpg](C:\Users\USER\Downloads\188842_0.jpg)
 
 ### **2. 使用者與權限管理**
 
@@ -59,7 +59,7 @@
 2. chmod u-r 1.txt(filename)減少r
 3. chmod u=r 1.txt(filename)只有r
 
-<img src="C:\Users\USER\Downloads\188843_0.jpg" alt="188843_0" style="zoom:80%;" />
+![188843_0.jpg](C:\Users\USER\Downloads\188843_0.jpg)
 
 ### **3. 程序管理**
 
