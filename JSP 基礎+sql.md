@@ -143,7 +143,7 @@ JSP 本質上就是 **Servlet 的一種特殊寫法**。
 
 
 
-
+ 例如:http://localhost:8080/index.jsp?name=Uriel
 
 會被翻譯成類似：
 
@@ -360,7 +360,7 @@ Browser (顯示頁面)
 
    - **ASP.NET：基於 .NET 平台，支援多種語言（C# 最常用）。**
 
-- **JDBC 操作資料庫：**負責連接資料庫+MySQL Workbench+DBeaver Community**，****JDBC** **Driver 以前都須上網找再自己抓**
+- **JDBC 操作資料庫：**負責連接資料庫+MySQL Workbench+DBeaver Community**，**JDBC **Driver 以前都須上網找再自己抓**
 
 1. **執行模式**
 
@@ -734,22 +734,22 @@ javac -version
 
 ## **1️⃣ 下載 Tomcat**
 
-1. **進入官方網站：****
-   ** **👉 https://tomcat.apache.org/****
+1. **進入官方網站：**
+   **👉 https://tomcat.apache.org/**
 
-   **
+   
 
-2. **建議使用 Tomcat 9 或 10（支援 Servlet 4.0 / JSP 2.3）****
+2. **建議使用 Tomcat 9 或 10（支援 Servlet 4.0 / JSP 2.3）**
 
-   **
+   
 
-   - **Tomcat 9 → 支援 Java 8 ~ 17****
+   - **Tomcat 9 → 支援 Java 8 ~ 17**
 
-     **
+     
 
-   - **Tomcat 10 → 需 Java 11+（package 名稱從** **javax.\*** **改成** **jakarta.\*****）****
+   - **Tomcat 10 → 需 Java 11+（package 名稱從** **javax.\*** **改成** **jakarta.\*****）
 
-     **
+     
 
 **⚡ 如果你是初學 JSP，推薦 Tomcat 9 + JDK 17，最穩定。**
 
@@ -881,6 +881,18 @@ mv apache-tomcat-9.0.91 /usr/local/tomcat9
 export CATALINA_HOME=/usr/local/tomcat9
 export PATH=$CATALINA_HOME/bin:$PATH
 ```
+
+tomcat9開關使用
+
+```bash
+sudo systemctl start tomcat9
+sudo systemctl stop tomcat9
+sudo systemctl status tomcat9
+sudo systemctl enable tomcat9
+sudo systemctl disable tomcat9
+```
+
+
 
 3. 
 
@@ -1015,8 +1027,6 @@ myapp/                       ← 專案根目錄
 
  http://localhost:8080/myapp/hello.jsp
 
-- 
-
 
 
 ------
@@ -1027,20 +1037,48 @@ myapp/                       ← 專案根目錄
 
 - Java 程式編譯後放在 WEB-INF/classes/
 
-  
 
-如果有 package，例如： 
+- 用eclipse
+- 把eclipse-workspace放方便的地方
 
-  
+1. windows->prefrences->server->Routine Envirement->Add…->apache->apache tomcatV9.0->
+
+- name:Apache Tomcat v9.0 
+- tomcat installationdirectory:/home/uriel/文件/apache-tomcat-9.0.95(需選方便的位址)
+- 按download and install -> i accept ->finish
+- JRE:Java-11-openjdk-amd64
+
+2. file->new->dynamic web project->
+
+- project name :myapp
+- Target Luntine:Apache Tomcat v9.0 
+- dynamic web module version:4.0
+
+->next->next->打勾 Grenerate web.xml deployment descriptor
+
+3. 檢查myapp properties的設定（dynamic web module,java,javascript version）
+
+4. 創myapp/Java resource/src/main/java/com.example.serlvet/HelloServlet.java
+
+- myapp->java resources->src/main/java->New->class->
+
+  - **package:com.example.servlet**
+
+  - **Name:HelloServlet**
+
+​	->finish
+
+- HelloServlet.class(tomcat9)
 
 ```java
 package com.example.servlet;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import java.io.*;
 
 public class HelloServlet extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
@@ -1067,6 +1105,7 @@ public class HelloServlet extends HttpServlet {
 
 放在 WEB-INF/，告訴 Tomcat 你的 Servlet 如何對應 URL：
 
+- myapp/src/main/webapp/WEB-INF/web.xml
 
 
 ```java
@@ -1608,7 +1647,7 @@ JSP 指令用來 **設定 JSP 編譯器或容器的行為**，它不會直接輸
 ### **範例：**
 
 ```java
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>//不建議使用
 
 <ul>
 <c:forEach var="item" items="${list}">
@@ -1643,13 +1682,23 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 - 用於 **在 JSP 生成的 Servlet 中宣告成員變數或方法**
 
-  
+  - **Servlet 本質上是一個「Java 類別」**
+
+- <%! Java 程式碼 %> 的！不要省略
 
 - 這些變數或方法會 **成為 Servlet 類別的成員**，可被 JSP 頁面內的其他程式碼呼叫
 
   
 
+##  **✅** **Servlet 成員變數/方法 vs OOP：對照總表**
 
+| **項目**             | **OOP 中的意義**         | **在 Servlet 中的實踐**                    | **注意事項**                           |
+| -------------------- | ------------------------ | ------------------------------------------ | -------------------------------------- |
+| **成員變數（欄位）** | **封裝狀態**             | **保存共享資料（如服務、資源）**           | **必須處理執行緒安全**                 |
+| **成員方法**         | **封裝行為、模組化邏輯** | **實作商業邏輯、工具方法**                 | **可拆分成獨立類別（服務層）**         |
+| **繼承**             | **重用功能、擴充行為**   | **繼承** **HttpServlet**                   | **覆寫** **doGet()****,** **doPost()** |
+| **多型**             | **相同介面，不同實作**   | **使用介面（如** **GreetingService****）** | **提高擴充性與測試性**                 |
+| **責任分離**         | **單一職責原則**         | **把邏輯搬到 Service 類別**                | **建立清楚分層架構（MVC）**            |
 
 ------
 
@@ -1676,6 +1725,11 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 - <%= %> → **輸出值**
 
   
+
+| **Scriptlet**        | **Expression**                                               |
+| -------------------- | ------------------------------------------------------------ |
+| **需要告訴它要顯示** | **Expression 直接顯示**                                      |
+| X                    | **不建議在 JSP 中使用成員變數** ，**因為是共用** ，**預設是多執行緒** |
 
 
 
@@ -1724,7 +1778,24 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 4. <%= ++counter %> → 修改成員變數，計算訪問次數
 
+   - **在 Java 中，****++c** **是 前置遞增運算子，意思是：**
+
+     ```java
+     在 Java 中，++c 是 前置遞增運算子，意思是：
+     int c = 5;
+     int result = ++c; // c 先加 1，然後再將值賦給 result
+     // result = 6, c = 6
+     
+     對比：
+     int c = 5;
+     int result = c++; // 先將 c 賦值給 result，再將 c 加 1
+     // result = 5, c = 6
+     ```
+
+     
+
    
+
 
 ⚠️ 注意：
 
@@ -2097,6 +2168,45 @@ Hello, Terry!
 
    - EL 可以直接使用 ${} 取得屬性，比 <%= %> 更安全、簡潔
 
+   - Linux F12 是在 **Firefox / Chrome**，這就是開發者工具。
+
+4. ### **Redirect（重導向）跟 Forward （轉發）：**
+
+   - **Forward 是在 server 端內部轉發，URL 不會變，請求和響應物件是同一個。**
+
+     
+
+   - **Redirect 是瀏覽器接收到響應後，再向新的 URL 發送請求，會有兩個請求。**
+
+   ## **簡單比較**
+
+   - | **特性**             | **Redirect (重導向)**          | **Forward (轉發)**                      |
+     | -------------------- | ------------------------------ | --------------------------------------- |
+     | **URL 是否變化**     | **會變化（瀏覽器地址列更新）** | **不變（瀏覽器地址列不變）**            |
+     | **請求是否重新發送** | **會重新發送新的請求**         | **只在伺服器內部傳遞請求**              |
+     | **使用場景**         | **網頁搬家、跳轉外部網站**     | **內部資源調用、轉交給 JSP 或 Servlet** |
+     | **客戶端是否知曉**   | **知曉**                       | **不知曉**                              |
+
+   5.補充:
+
+- **如果有遇到有寫好程式用錯 不要幫它釘正 debug有問題的地方就好**
+- MIME（**Multipurpose Internet Mail Extensions，多用途網際郵件延伸協定**）最早是為了在電子郵件中傳送非純文字內容（例如圖片、聲音、影片、附件）而設計的，但它的概念後來也廣泛應用在 **HTTP、Web API、檔案上傳** 等地方。
+  1. MIME 在電子郵件中的用法
+     - 電子郵件原本只能傳送 ASCII 純文字，MIME 擴充後能傳送：
+       - 二進位檔案（圖片、壓縮檔、程式）
+       - 多國語言（UTF-8 編碼）
+       - 多媒體內容（音訊、影像）
+  2. MIME 在 HTTP/網頁中的用法
+     - MIME Type（又稱 **Content-Type**）用來告訴瀏覽器或應用程式「這個資料的型態」。
+  3. MIME 在檔案上傳（Web API）
+     - 每個 `boundary` 區塊代表一個表單欄位或檔案。
+       - 例如使用 `curl` 上傳檔案：
+  4. 常見應用
+     - **Email** → 傳送附件、多國語言內容
+     - **Web server** → 正確設定檔案 MIME Type，讓瀏覽器能正確顯示或下載
+     - **API** → 指定 JSON、XML、圖片、影片等格式
+     - **檔案上傳** → 使用 `multipart/form-data`
+
 # **第四章： JSP 內建物件（Implicit Objects）**
 
 JSP 提供了 **9 個常用內建物件**，用來方便操作請求、回應、Session 等功能，而 **不需要額外宣告或初始化**。
@@ -2106,18 +2216,109 @@ JSP 提供了 **9 個常用內建物件**，用來方便操作請求、回應、
 | request     | HttpServletRequest  | 封裝 HTTP 請求資料，例如表單提交、URL 參數、Header |
 | response    | HttpServletResponse | 封裝 HTTP 回應資料，設定 MIME、輸出內容、Cookie 等 |
 | out         | JspWriter           | 輸出內容到瀏覽器（類似 System.out）                |
-| session     | HttpSession         | 與特定使用者相關的會話資料                         |
+| session     | HttpSession         | 與特定使用者相關的會話資料(**控制時間**)           |
 | application | ServletContext      | 全域應用程式範圍資料                               |
 | config      | ServletConfig       | Servlet 配置資訊                                   |
 | pageContext | PageContext         | JSP 頁面範圍內的所有物件封裝                       |
 | page        | Object              | 目前 JSP 頁面本身的參考（this）                    |
 | exception   | Throwable           | 當頁面作為錯誤頁面時，用來取得例外物件             |
 
-
+- [**OSI模型**]([**https://claire-chang.com/2022/08/01/%E7%B6%B2%E8%B7%AF%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%B4%B9/**](https://claire-chang.com/2022/08/01/網路概念模型介紹/)
 
 ------
 
+![voH73Eu.webp](D:\sss\java\voH73Eu.webp)
 
+- **都有通訊協定**
+- **大部分在第五層**
+- **偶爾寫第三層第四層**
+
+##  1. 實體層（Physical Layer）
+
+- **功能**：傳輸 **實體訊號**（0/1 bit 電壓、光訊號、無線電波）
+- **硬體相關**：網路線、集線器（Hub）、網路卡的實體介面
+- **協定/技術範例**：RJ-45、Ethernet 物理規範、光纖規範
+
+------
+
+## 2. 資料鏈結層（Data Link Layer）
+
+- **功能**：把實體訊號轉換成 **資料幀（Frame）**，並提供錯誤偵測、媒體存取控制（MAC）
+- **設備**：交換器（Switch）、橋接器（Bridge）
+- **協定範例**：
+  - Ethernet (IEEE 802.3)
+  - PPP（Point-to-Point Protocol）
+  - ARP（Address Resolution Protocol）
+- **地址型態**：**MAC 位址**（硬體地址）
+
+------
+
+## 3. 網路層（Network Layer）
+
+- **功能**：決定資料如何在網路中**尋址與轉送**（Routing）
+- **設備**：路由器（Router）
+- **協定範例**：
+  - IP（IPv4/IPv6）
+  - ICMP（Ping）
+  - OSPF、BGP（路由協定）
+- **地址型態**：**IP 位址**
+
+------
+
+## 4. 傳輸層（Transport Layer）
+
+- **功能**：提供**端對端傳輸**、分段與重組、流量控制、可靠傳輸
+- **協定範例**：
+  - TCP（可靠，連線導向）
+  - UDP（不可靠，無連線）
+- **識別方式**：**Port（埠號）**
+
+------
+
+## 5. 會議層（Session Layer）
+
+- **功能**：建立、管理與終止應用之間的**會話（Session）**
+- **應用範例**：
+  - RPC（Remote Procedure Call）
+  - NetBIOS
+  - TLS/SSL 的部分功能（在傳輸層與應用層之間）
+
+------
+
+## 6. 表達層（Presentation Layer）
+
+- **功能**：資料的轉換、壓縮、加密/解密
+- **範例**：
+  - JPEG、GIF（影像格式）
+  - MP3、MP4（媒體格式）
+  - SSL/TLS（加密）
+  - 編碼轉換（ASCII ↔ Unicode）
+
+------
+
+## 7. 應用層（Application Layer）
+
+- **功能**：直接面向使用者，提供網路應用服務
+- **協定範例**：
+  - HTTP/HTTPS（網頁）
+  - FTP（檔案傳輸）
+  - SMTP/POP3/IMAP（電子郵件）
+  - DNS（網域名稱解析）
+  - SSH、Telnet（遠端連線）
+
+------
+
+# 📊 OSI 七層模型對照表（速查）
+
+| 層級 | 名稱       | 功能           | 協定 / 範例          | 對應設備        |
+| ---- | ---------- | -------------- | -------------------- | --------------- |
+| 7    | 應用層     | 提供應用服務   | HTTP, FTP, SMTP, DNS | -               |
+| 6    | 表達層     | 格式轉換、加密 | JPEG, MP3, SSL/TLS   | -               |
+| 5    | 會議層     | 建立/管理會話  | NetBIOS, RPC         | -               |
+| 4    | 傳輸層     | 可靠傳輸、分段 | TCP, UDP             | 防火牆          |
+| 3    | 網路層     | 尋址與路由     | IP, ICMP, OSPF, BGP  | Router          |
+| 2    | 資料鏈結層 | 成幀、MAC 管理 | Ethernet, ARP, PPP   | Switch, Bridge  |
+| 1    | 實體層     | 傳輸比特流     | RJ-45, 光纖, Wi-Fi   | Hub, 網卡, 線材 |
 
 ## **1️⃣** **request** **物件**
 
@@ -2273,7 +2474,7 @@ JavaBean 是 **可重複使用的 Java 類別**，遵循一定規範，可讓 JS
 
 
 
-
+- **public** **User**() {} 如果沒被加 compiler會幫你加無參建構子
 
 1. 
 
@@ -2291,15 +2492,139 @@ public void setName(String name) { this.name = name; }
 
 
 
-1. 
+
 
 2. **可序列化（實務中常加 implements Serializable）**
 
-   
+
 
 3. **不含大量業務邏輯**（建議只存放屬性與簡單方法）
 
-   
+
+
+4. Variable（變數）
+
+## **Java 中四種變數的比較表**
+
+| **類型**           | **定義位置**      | **存活時間（生命週期）** | **使用範圍（作用域）** | **關鍵字** | **是否有預設值** | **需要手動初始化** |
+| ------------------ | ----------------- | ------------------------ | ---------------------- | ---------- | ---------------- | ------------------ |
+| **Block**          | 區塊 {} 裡        | 區塊執行期間             | 區塊內                 | 無         | ❌ 沒有           | ✅ 是               |
+| **Local**          | 方法或建構子裡    | 方法執行期間             | 方法內                 | 無         | ❌ 沒有           | ✅ 是               |
+| **Instance**       | 類別中，方法外    | 物件活著期間             | 整個物件               | 無         | ✅ 有             | ❌ 否               |
+| **Static (Class)** | 類別中，加 static | 整個程式期間             | 整個類別（共享）       | static     | ✅ 有             | ❌ 否               |
+
+## **重點解析**
+
+### **🔹 Block 變數**
+
+- 在大括號 {} 中定義，像 if, for, while 區塊
+
+  
+
+- **只能在區塊內使用**
+
+  
+
+- 區塊結束就會銷毀
+
+  
+
+- 一種特別狹窄的 **local 變數**
+
+  
+
+### **🔸 Local 變數**
+
+- 在方法或建構子中定義
+
+  
+
+- **執行方法時建立，結束就消失**
+
+  
+
+- **必須初始化，否則不能使用**
+
+  
+
+- 不能加 public、private 等修飾詞
+
+  
+
+### **🔹 Instance 變數**
+
+- 宣告在類別中，但不加 static
+
+  
+
+- **每個物件都有自己的副本**
+
+  
+
+- 可以設定 public、private 修飾詞
+
+  
+
+- 有預設值（數字是 0，布林是 false，物件是 null）
+
+- 屬於物件本身，用 this.變數名 存取
+
+  
+
+### **🔸 Static (Class) 變數**
+
+- 宣告在類別中，加上 static
+
+  
+
+- **屬於類別，不屬於物件**
+
+  
+
+- 所有物件 **共享** 一份
+
+  
+
+- 通常用於統計類資料，例如計算所有物件數量
+
+  
+
+
+
+------
+
+
+
+## **📌 使用場景建議**
+
+| **目的 / 狀況**                      | **建議使用變數** |
+| ------------------------------------ | ---------------- |
+| 只在某個區塊內暫時存值               | block            |
+| 一個方法內處理資料                   | local            |
+| 每個物件要有自己的資料               | instance         |
+| 所有物件共享資料（例如：總計、設定） | static           |
+
+
+
+------
+
+
+
+## **✅ 小結（一句話記住）**
+
+- Block：括號內的小變數
+
+  
+
+- Local：方法內的小兵
+
+  
+
+- Instance：每個物件自己的變數
+
+  
+
+- Static：全班共用的變數
 
 
 
@@ -2312,6 +2637,8 @@ public void setName(String name) { this.name = name; }
 #### **①** **<jsp:useBean>**
 
 - 作用：在 JSP 中 **建立或引用 JavaBean 物件**
+
+- 有無參數建構子、private 變數 + getter/setter 標準
 
   
 
@@ -2418,6 +2745,8 @@ public class User {
 
 
 
+
+
 **form.html**
 
 ```java
@@ -2484,6 +2813,54 @@ public class User {
 | View         | JSP 頁面                                     |
 | Controller   | Servlet（接收請求，操作 Bean，再轉發到 JSP） |
 
+
+
+| JavaBean                                          | POJO                               |
+| ------------------------------------------------- | ---------------------------------- |
+| 有無參數建構子、private 變數 + getter/setter 標準 | 簡單 Java 物件，沒有特殊依賴或規範 |
+
+補充:
+
+## **JSON vs JavaBean 對照表**
+
+| **比較項目** | **JSON**                | **JavaBean**                |
+| ------------ | ----------------------- | --------------------------- |
+| 本質         | 資料格式（文字）        | 類別設計模式（Java 物件）   |
+| 用途         | 傳輸、儲存資料          | 封裝資料、操作邏輯          |
+| 表示形式     | 字串（通常為 .json 檔） | Java 類別                   |
+| 是否可程式化 | ❌（不能執行程式邏輯）   | ✅（可以有方法、邏輯）       |
+| 語言限定     | 無                      | Java 專用                   |
+| 互轉         | 可以透過工具互轉        | 需用套件如 Jackson、Gson 等 |
+
+## **JavaBean歷史**
+
+| **名稱**                   | **說明**                                          |
+| -------------------------- | ------------------------------------------------- |
+| **普通 Java 類別（早期）** | 沒有標準 getter/setter 的類別                     |
+| **JavaBean**               | 有無參數建構子、private 變數 + getter/setter 標準 |
+| **POJO**                   | 簡單 Java 物件，沒有特殊依賴或規範                |
+
+## **JSON歷史**
+
+### **總結：**
+
+| **名稱**              | **時間**   | **角色**           | **特點**                     |
+| --------------------- | ---------- | ------------------ | ---------------------------- |
+| XML                   | 1998 年    | 傳統資料交換格式   | 冗長、複雜但功能強大         |
+| JavaScript 物件字面量 | 1990s 中期 | 內建語法表示資料   | 僅限 JS 語言，非標準交換格式 |
+| **JSON**              | 2001 年    | 輕量級資料交換格式 | 簡潔、跨語言、易解析         |
+
+#### OOP物件導向程式設計
+
+## **總結圖解**
+
+| **概念** | **意義**             | **目的**             |
+| -------- | -------------------- | -------------------- |
+| 封裝     | 隱藏細節，只提供介面 | 保護資料，減少耦合   |
+| 繼承     | 類別之間的父子關係   | 程式碼重用           |
+| 多型     | 同一行為不同實現     | 靈活設計、擴充功能   |
+| 抽象     | 聚焦共通行為與特性   | 降低複雜度，增加彈性 |
+
 #### **MVC 範例流程**
 
 1. 使用者提交表單 → **Servlet (Controller)**
@@ -2496,7 +2873,23 @@ public class User {
 
 3. Servlet 轉發到 JSP → **JSP 透過** **<jsp:getProperty>** **顯示 Bean 資料**
 
-   
+4. 為什麼用 MVC？
+
+   - **分離責任**：讓程式碼更有組織、易維護
+
+     - JavaBean + JSP 可以 **達到資料與畫面分離**
+     - 避免全都用jsp會很難DEBEG
+
+     
+
+   - **提高可重用性**：View 與 Model 分離，可以換 UI 不改資料邏輯
+
+     
+
+   - **團隊合作方便**：前端設計師和後端工程師可以各司其職
+
+   - **擴充性好**：方便新增功能與測試
+
 
 
 
@@ -2515,6 +2908,12 @@ public class User {
   
 
 - MVC 架構能讓專案 **邏輯清楚、易於維護**
+
+  
+
+- 改到java(.class)需重啟但改jsp則不用重啟
+
+
 
 # **第六章：JSP 與資料庫（JDBC）**
 
@@ -2584,6 +2983,8 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 - PostgreSQL → postgresql-xx.xx.jar
    放到 **Tomcat 的** **lib/** **目錄**。
+   
+- maven mysql-connector
 
   
 
@@ -2621,7 +3022,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = DriverManager.getConnection(url, user, password);
         out.println("<p>✅ 資料庫連線成功！</p>");
-        conn.close();
+        conn.close();//避免爆滿
     } catch (Exception e) {
         out.println("<p>❌ 連線失敗：" + e.getMessage() + "</p>");
     }
@@ -2663,7 +3064,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = DriverManager.getConnection(url, user, password);
 
-        Statement stmt = conn.createStatement();
+        Statement stmt = conn.createStatement();//不建議使用 會有sql rejection
         ResultSet rs = stmt.executeQuery("SELECT * FROM users");
 
         while (rs.next()) {
@@ -2702,14 +3103,15 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 ```java
 <%@ page import="java.sql.*" %>
 <html>
-<head><title>刪除使用者</title></head>
+<head><title>新增使用者</title></head>
 <body>
-<h2>刪除使用者</h2>
+<h2>新增使用者</h2>
 
 <%
-    String id = request.getParameter("id");
+    String name = request.getParameter("name");
+    String email = request.getParameter("email");
 
-    if (id != null) {
+    if (name != null && email != null) {
         try {
             String url = "jdbc:mysql://localhost:3306/testdb?useSSL=false&serverTimezone=UTC";
             String user = "root";
@@ -2718,22 +3120,24 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(url, user, password);
 
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM users WHERE id=?");
-            ps.setInt(1, Integer.parseInt(id));
-            int rows = ps.executeUpdate();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO users (name, email) VALUES (?, ?)");///建議使用
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.executeUpdate();
 
             ps.close();
             conn.close();
-            out.println("<p>✅ 已刪除 " + rows + " 筆資料。</p>");
+            out.println("<p> 已新增使用者：" + name + "</p>");
         } catch (Exception e) {
-            out.println("<p>❌ 錯誤：" + e.getMessage() + "</p>");
+            out.println("<p> 錯誤：" + e.getMessage() + "</p>");
         }
     }
 %>
 
 <form method="post">
-    使用者ID: <input type="text" name="id"><br>
-    <input type="submit" value="刪除">
+    姓名: <input type="text" name="name"><br>
+    信箱: <input type="text" name="email"><br>
+    <input type="submit" value="新增">
 </form>
 </body>
 </html>
@@ -2774,7 +3178,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
             PreparedStatement ps = conn.prepareStatement("UPDATE users SET email=? WHERE id=?");
             ps.setString(1, email);
             ps.setInt(2, Integer.parseInt(id));
-            int rows = ps.executeUpdate();
+            int rows = ps.executeUpdate();//回傳更新的筆數
 
             ps.close();
             conn.close();
@@ -2844,7 +3248,9 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 </html>
 ```
 
+補充:
 
+- connection pool管理避免queue炸掉
 
 
 
@@ -2854,7 +3260,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 # **第七章：JSP 與表單處理**
 
-## **1️⃣ 取得表單參數：****request.getParameter()**
+## **1️⃣ 取得表單參數：**request.getParameter()
 
 ### **範例：簡單登入表單**
 
@@ -3064,6 +3470,43 @@ JSP 本身沒有內建檔案上傳功能，通常會用 **Apache Commons FileUpl
 
 
 📌 上傳後的檔案會儲存在 Tomcat/webapps/yourapp/uploads/
+
+
+
+- **JSP 範圍屬性比較：Page、Request、Session、Application**
+
+| **範圍**        | **存活週期**                                           | **資料共享範圍**                                 | **用途範例**         | **儲存方式**               |
+| --------------- | ------------------------------------------------------ | ------------------------------------------------ | -------------------- | -------------------------- |
+| **Page**        | 當前 JSP 頁面請求結束即消失                            | 僅限當前 JSP 頁面                                | 暫存頁面內部變數     | pageContext.setAttribute() |
+| **Request**     | 一次 HTTP 請求完整處理期間                             | 同一次請求中的所有資源（包含轉發的 JSP/Servlet） | 轉發頁面間共享資料   | request.setAttribute()     |
+| **Session**     | 使用者瀏覽器與伺服器連線期間（默認30分鐘不活躍則失效） | 同一使用者的多次請求                             | 登入狀態、購物車資料 | session.setAttribute()     |
+| **Application** | 伺服器啟動至停止（全應用程序範圍）                     | 所有使用者、所有請求                             | 系統參數、共用資源   | application.setAttribute() |
+
+VS Code 官方的 Java Extension 有包含 Maven 
+
+varchar vs char
+
+## **主要差異比較：****VARCHAR** **vs** **CHAR**
+
+| **特性**     | **VARCHAR(n)**                            | **CHAR(n)**                        |
+| ------------ | ----------------------------------------- | ---------------------------------- |
+| **長度**     | 可變長度，最多 n 字元                     | 固定長度，總是剛好 n 字元          |
+| **儲存方式** | 儲存實際字串長度 + 內容（變動大小）       | 不足長度會用空白補滿（固定大小）   |
+| **儲存空間** | **節省空間，只佔實際字數 + 額外位元組**   | 佔用固定空間（浪費空間但簡單）     |
+| **查詢效能** | 通常較慢，尤其在頻繁修改的欄位            | **通常較快，適合長度一致的資料**   |
+| **對比行為** | 根據 DBMS，空白可能影響比較               | 空白自動填充，但比對時通常忽略空白 |
+| **最大長度** | 各 DBMS 不同（如 MySQL 最多 65,535 字元） | 限於 n 字元                        |
+
+## **使用建議**
+
+| **情境**                       | **推薦使用** |
+| ------------------------------ | ------------ |
+| 一般字串輸入（姓名、Email 等） | VARCHAR      |
+| 固定長度編碼（郵遞區號、代碼） | CHAR         |
+| 資料長度差異大                 | VARCHAR      |
+| 高速查詢、密集比較的欄位       | CHAR         |
+
+
 
 # **第八章：Session 與 Cookie 管理**
 
@@ -3492,7 +3935,7 @@ ApplicationScope：Application 範圍
 
 <h3>使用 JSTL + EL 輸出清單</h3>
 <ul>
-    <c:forEach var="u" items="${userList}">
+    <c:forEach var="u" items="${userList}">//建議使用
         <li>${u}</li>
     </c:forEach>
 </ul>
@@ -3855,7 +4298,7 @@ public class LoginServlet extends HttpServlet {
 </html>
 ```
 
-
+- <%@ taglib %> 很重要
 
 ------
 
