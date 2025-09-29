@@ -20,7 +20,7 @@
 | head -n 文件名稱                | 查看文件前 n 行                 |
 | tail -n 文件名稱                | 查看文件後 n 行                 |
 
-![188842_0.jpg](C:\Users\USER\Downloads\188842_0.jpg)
+![188842_0.jpg](D:\sss\java\188842_0.jpg)
 
 ### **2. 使用者與權限管理**
 
@@ -59,7 +59,7 @@
 2. chmod u-r 1.txt(filename)減少r
 3. chmod u=r 1.txt(filename)只有r
 
-![188843_0.jpg](C:\Users\USER\Downloads\188843_0.jpg)
+!![188843_0.jpg](D:\sss\java\188843_0.jpg)
 
 ### **3. 程序管理**
 
@@ -145,11 +145,11 @@ Ubuntu 使用 **APT（Advanced Package Tool）** 來管理軟體，以下是 Ubu
 
    在terminal輸入
 
-  ![ex1.png](C:\Users\USER\Downloads\ex1.png)
+  ![ex1.png](D:\sss\java\ex1.png)
 
   加入自已帳號如下terry
 
-  ![ex2.png](C:\Users\USER\Downloads\ex2.png)
+  ![ex2.png](D:\sss\java\ex2.png)
 
   Ctrl + o 存檔
 
