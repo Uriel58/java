@@ -21,7 +21,7 @@ https://docs.google.com/document/d/1TVhEHhh7Q-MJIZY6IpM9PJkJzC0RSolL9yI80PcDvBY/
 
 放進webapps資料夾
 
-```java
+```bash
 sudo find / -type d -name webapps 2>/dev/null
 ```
 
@@ -36,7 +36,7 @@ sudo find / -type d -name webapps 2>/dev/null
 
 例如：
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <body>
@@ -133,7 +133,7 @@ JSP 本質上就是 **Servlet 的一種特殊寫法**。
 
 例如：
 
-```java
+```jsp
 <html>
 <body>
   Hello, <%= request.getParameter("name") %>
@@ -147,7 +147,7 @@ JSP 本質上就是 **Servlet 的一種特殊寫法**。
 
 會被翻譯成類似：
 
-```java
+```html
 out.write("<html><body>");
 out.write("Hello, " + request.getParameter("name"));
 out.write("</body></html>");
@@ -486,7 +486,7 @@ Browser (顯示頁面)
 
 在 webapps/myapp/ 底下新增一個 hello.jsp 檔案，內容如下：
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
@@ -967,7 +967,7 @@ tomcat/
 
 
 
-```java
+```jsp
 <html>
 <body>
   <h1>Hello JSP with Tomcat!</h1>
@@ -1070,7 +1070,7 @@ myapp/                       ← 專案根目錄
 
 - HelloServlet.class(tomcat9)
 
-```java
+```jsp
 package com.example.servlet;
 
 import javax.servlet.*;
@@ -1108,7 +1108,7 @@ public class HelloServlet extends HttpServlet {
 - myapp/src/main/webapp/WEB-INF/web.xml
 
 
-```java
+```jsp
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="3.1">
   
@@ -1204,7 +1204,7 @@ tomcat/
 
 **hello.jsp 範例**：
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -1351,7 +1351,7 @@ JSP 指令用來 **設定 JSP 編譯器或容器的行為**，它不會直接輸
 
 ### **語法範例：**
 
-```java
+```jsp
 <%@ directive attribute="value" %>
 ```
 
@@ -1559,7 +1559,7 @@ JSP 指令用來 **設定 JSP 編譯器或容器的行為**，它不會直接輸
 
 ### **範例：**
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" language="java" import="java.util.*" %>
 
 <html>
@@ -1591,7 +1591,7 @@ JSP 指令用來 **設定 JSP 編譯器或容器的行為**，它不會直接輸
 
 ### **語法：**
 
-```java
+```jsp
 <%@ include file="header.jsp" %>
 ```
 
@@ -1601,7 +1601,7 @@ JSP 指令用來 **設定 JSP 編譯器或容器的行為**，它不會直接輸
 
 **header.jsp**
 
-```java
+```jsp
 <div style="background-color: #ddd; padding: 10px;">
     <h1>我的網站標題</h1>
 </div>
@@ -1611,7 +1611,7 @@ JSP 指令用來 **設定 JSP 編譯器或容器的行為**，它不會直接輸
 
 **index.jsp**
 
-```java
+```jsp
 <%@ include file="header.jsp" %>
 <p>首頁內容</p>
 ```
@@ -1646,7 +1646,7 @@ JSP 指令用來 **設定 JSP 編譯器或容器的行為**，它不會直接輸
 
 ### **範例：**
 
-```java
+```jsp
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>//不建議使用
 
 <ul>
@@ -1692,13 +1692,13 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 ##  **✅** **Servlet 成員變數/方法 vs OOP：對照總表**
 
-| **項目**             | **OOP 中的意義**         | **在 Servlet 中的實踐**                    | **注意事項**                           |
-| -------------------- | ------------------------ | ------------------------------------------ | -------------------------------------- |
-| **成員變數（欄位）** | **封裝狀態**             | **保存共享資料（如服務、資源）**           | **必須處理執行緒安全**                 |
-| **成員方法**         | **封裝行為、模組化邏輯** | **實作商業邏輯、工具方法**                 | **可拆分成獨立類別（服務層）**         |
-| **繼承**             | **重用功能、擴充行為**   | **繼承** **HttpServlet**                   | **覆寫** **doGet()****,** **doPost()** |
-| **多型**             | **相同介面，不同實作**   | **使用介面（如** **GreetingService****）** | **提高擴充性與測試性**                 |
-| **責任分離**         | **單一職責原則**         | **把邏輯搬到 Service 類別**                | **建立清楚分層架構（MVC）**            |
+| **項目**             | **OOP 中的意義**         | **在 Servlet 中的實踐**                | **注意事項**                       |
+| -------------------- | ------------------------ | -------------------------------------- | ---------------------------------- |
+| **成員變數（欄位）** | **封裝狀態**             | **保存共享資料（如服務、資源）**       | **必須處理執行緒安全**             |
+| **成員方法**         | **封裝行為、模組化邏輯** | **實作商業邏輯、工具方法**             | **可拆分成獨立類別（服務層）**     |
+| **繼承**             | **重用功能、擴充行為**   | **繼承** **HttpServlet**               | **覆寫** **doGet()**, **doPost()** |
+| **多型**             | **相同介面，不同實作**   | **使用介面（如** **GreetingService**） | **提高擴充性與測試性**             |
+| **責任分離**         | **單一職責原則**         | **把邏輯搬到 Service 類別**            | **建立清楚分層架構（MVC）**        |
 
 ------
 
@@ -1741,7 +1741,7 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 
 
-```java
+```jsp
 <%! 
     // 成員變數
     int counter = 0;
@@ -1825,7 +1825,7 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 ### **1️⃣ 語法**
 
-```java
+```jsp
 <%
 
   // Java 程式碼片段
@@ -1877,7 +1877,7 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%! int counter = 0; %>
 
@@ -1980,7 +1980,7 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <body>
@@ -2052,7 +2052,7 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 ### **3️⃣ 範例 1：輸出文字**
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <body>
@@ -2074,7 +2074,7 @@ list 來自 Servlet 或 JSP 設定的屬性，標籤庫會自動處理迴圈。
 
 ### **4️⃣ 範例 2：輸出變數與方法**
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%! 
     int counter = 0;
@@ -2223,7 +2223,7 @@ JSP 提供了 **9 個常用內建物件**，用來方便操作請求、回應、
 | page        | Object              | 目前 JSP 頁面本身的參考（this）                    |
 | exception   | Throwable           | 當頁面作為錯誤頁面時，用來取得例外物件             |
 
-- [**OSI模型**]([**https://claire-chang.com/2022/08/01/%E7%B6%B2%E8%B7%AF%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%B4%B9/**](https://claire-chang.com/2022/08/01/網路概念模型介紹/)
+- [**OSI模型**]([**https://claire-chang.com/2022/08/01/%E7%B6%B2%E8%B7%AF%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%B4%B9/**](https://claire-chang.com/2022/08/01/網路概念模型介紹/))
 
 ------
 
@@ -2356,7 +2356,7 @@ JSP 提供了 **9 個常用內建物件**，用來方便操作請求、回應、
 
 ### **3️⃣ 範例 1：取得表單參數**
 
-**form.html**
+**form.java(servlet)**
 
 ```java
 <form action="hello.jsp" method="post">
@@ -2369,7 +2369,7 @@ JSP 提供了 **9 個常用內建物件**，用來方便操作請求、回應、
 
 **hello.jsp**
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     String name = request.getParameter("username");  // 取得表單參數
@@ -2397,7 +2397,7 @@ JSP 提供了 **9 個常用內建物件**，用來方便操作請求、回應、
 
 **先在 Servlet 設定屬性：**
 
-```java
+```jsp
 request.setAttribute("greeting", "Hello JSP!");
 request.getRequestDispatcher("/show.jsp").forward(request, response);
 ```
@@ -2408,7 +2408,7 @@ request.getRequestDispatcher("/show.jsp").forward(request, response);
 
 **show.jsp**
 
-```java
+```jsp
 <p>訊息：<%= request.getAttribute("greeting") %></p>
 ```
 
@@ -2749,7 +2749,7 @@ public class User {
 
 **form.html**
 
-```java
+```html
 <form action="showUser.jsp" method="post">
     姓名：<input type="text" name="name">
     年齡：<input type="text" name="age">
@@ -2761,7 +2761,7 @@ public class User {
 
 **showUser.jsp**
 
-```java
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 <jsp:useBean id="user" class="com.example.User" scope="request" />
 <jsp:setProperty name="user" property="*" />
@@ -2998,7 +2998,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 **db_connect.jsp**
 
-```java
+```jsp
 <%@ page import="java.sql.*" %>
 <html>
 <head><title>JDBC 測試</title></head>
@@ -3043,7 +3043,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 **db_query.jsp**
 
-```java
+```jsp
 <%@ page import="java.sql.*" %>
 <html>
 <head>
@@ -3100,7 +3100,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 **db_insert.jsp**
 
-```java
+```jsp
 <%@ page import="java.sql.*" %>
 <html>
 <head><title>新增使用者</title></head>
@@ -3155,7 +3155,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 **db_update.jsp**
 
-```java
+```jsp
 <%@ page import="java.sql.*" %>
 <html>
 <head><title>更新使用者</title></head>
@@ -3208,7 +3208,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 **db_delete.jsp**
 
-```java
+```jsp
 <%@ page import="java.sql.*" %>
 <html>
 <head><title>刪除使用者</title></head>
@@ -3264,7 +3264,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 ### **範例：簡單登入表單**
 
-```java
+```jsp
 <html>
 <head><title>登入頁面</title></head>
 <body>
@@ -3282,7 +3282,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 **login.jsp**
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head><title>登入結果</title></head>
@@ -3315,7 +3315,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 **register.html**
 
-```java
+```html
 <html>
 <head>
     <title>註冊頁面</title>
@@ -3355,7 +3355,7 @@ INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
 
 **register.jsp**
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head><title>註冊結果</title></head>
@@ -3410,7 +3410,7 @@ JSP 本身沒有內建檔案上傳功能，通常會用 **Apache Commons FileUpl
 
 **upload.html**
 
-```java
+```html
 <html>
 <head><title>檔案上傳</title></head>
 <body>
@@ -3435,7 +3435,7 @@ JSP 本身沒有內建檔案上傳功能，通常會用 **Apache Commons FileUpl
 
 **upload.jsp**
 
-```java
+```jsp
 <%@ page import="java.util.*, java.io.*, org.apache.commons.fileupload.*, org.apache.commons.fileupload.disk.*, org.apache.commons.fileupload.servlet.*" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
@@ -3486,7 +3486,7 @@ VS Code 官方的 Java Extension 有包含 Maven
 
 varchar vs char
 
-## **主要差異比較：****VARCHAR** **vs** **CHAR**
+## **主要差異比較：**VARCHAR **vs** **CHAR**
 
 | **特性**     | **VARCHAR(n)**                            | **CHAR(n)**                        |
 | ------------ | ----------------------------------------- | ---------------------------------- |
@@ -3526,6 +3526,10 @@ varchar vs char
 
   - 適合保存 **非敏感資訊**（例如：記住帳號、語系設定）
 
+  - 反編譯 .class
+
+  - google設定永不過期
+
     
 
 - **Session**
@@ -3536,7 +3540,7 @@ varchar vs char
 
     
 
-  - 透過 **Session ID** 與瀏覽器關聯
+  - 透過 **Session ID** 與瀏覽器關聯(F12)
 
     
 
@@ -3557,7 +3561,7 @@ varchar vs char
 ```java
 <%
     Cookie userCookie = new Cookie("username", "Tom");
-    userCookie.setMaxAge(60*60*24); // 1 天
+    userCookie.setMaxAge(60*60*24); // 1 天(60s*60min*24hr)
     response.addCookie(userCookie);
 %>
 ```
@@ -3606,7 +3610,7 @@ Session 已設定！
 
 ```java
 <%
-    String username = (String) session.getAttribute("username");
+    String username = (String) session.getAttribute("username");//有seesion強制轉型
     if (username != null) {
         out.print("目前使用者：" + username);
     } else {
@@ -3614,6 +3618,11 @@ Session 已設定！
     }
 %>
 ```
+
+if()裡面
+
+- **usernane ! = null && usernane.equals(“tom”)//比較X**
+- **“tom”.equals(usernane)//比較V**
 
 
 
@@ -3641,7 +3650,7 @@ Session 已設定！
 
 
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head><title>會員登入</title></head>
@@ -3669,7 +3678,7 @@ Session 已設定！
 ```java
 <%@ page import="jakarta.servlet.http.*,jakarta.servlet.*" %>
 <%
-    String user = request.getParameter("username");
+    String user = request.getParameter("username");//getParameter參數
     String pass = request.getParameter("password");
 
     if ("admin".equals(user) && "1234".equals(pass)) {
@@ -3694,7 +3703,7 @@ Session 已設定！
 
 
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%
     String username = (String) session.getAttribute("username");
@@ -3721,7 +3730,7 @@ Session 已設定！
 
 ### **(4)** **logout.jsp**（登出）
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%
     session.invalidate(); // 銷毀 Session
@@ -3742,7 +3751,7 @@ Session 已設定！
 
 **el_basic.jsp**
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head><title>EL 基本範例</title></head>
@@ -3752,8 +3761,8 @@ Session 已設定！
     request.setAttribute("age", 25);
 %>
 
-<p>傳統 JSP 表達式：<%= request.getAttribute("username") %></p>
-<p>EL 表達式：${username}</p>
+<p>傳統 JSP 表達式：<%= request.getAttribute("username") %></p>//可以拋棄了
+<p>EL 表達式：${username}</p>//用這
 <p>EL 運算：${age + 5}</p>
 </body>
 </html>
@@ -3789,6 +3798,7 @@ ${10 / 2}   → 5
 ${10 % 3}   → 1
 ```
 
+- ${10 % 2}  → 1 ->常用，（二進位）等
 
 
 ### **(B) 比較運算子**
@@ -3801,7 +3811,16 @@ ${5 eq 5}     → true    (eq = equal)
 ${5 ne 10}    → true    (ne = not equal)
 ```
 
+## **EL 中的比較運算子對照表：**
 
+| **EL 運算子** | **Java 對應符號** | **意義** |
+| ------------- | ----------------- | -------- |
+| gt            | >                 | 大於     |
+| lt            | <                 | 小於     |
+| ge            | >=                | 大於等於 |
+| le            | <=                | 小於等於 |
+| eq            | ==                | 等於     |
+| ne            | !=                | 不等於   |
 
 ### **(C) 邏輯運算子**
 
@@ -3811,7 +3830,142 @@ ${true || false}  → true
 ${!false}         → true
 ```
 
+## **在 Java（Scriptlet）中：**&
 
+### **&** **是「位元運算子 AND」**
+
+- 比特位逐位比較
+
+  
+
+- 通常用於數值操作
+
+  
+
+#### **範例：**
+
+int a = 5;  // 二進位 0101
+
+int b = 3;  // 二進位 0011
+
+int c = a & b; // 結果是 0001 → 1
+
+
+
+------
+
+
+
+## **✅ 在 Java 邏輯運算中也可以看到** **&****，但有兩種寫法：**
+
+| **寫法** | **名稱**               | **說明**                       |
+| -------- | ---------------------- | ------------------------------ |
+| &        | **邏輯 AND**（不短路） | 左右條件都會執行               |
+| &&       | **短路 AND**（推薦）   | 如果左邊為 false，右邊不會執行 |
+
+### **範例比較：**
+
+// 不短路 AND
+
+if (checkA() & checkB()) {
+
+  // 兩個都會執行，不管 checkA() 結果如何
+
+}
+
+// 短路 AND
+
+if (checkA() && checkB()) {
+
+  // 若 checkA() 為 false，checkB() 不會執行
+
+}
+
+
+
+------
+
+
+
+## **✅ 在 EL（Expression Language）中：不能用** **&**
+
+EL 表達式中不支援 &，要用邏輯運算子關鍵字。
+
+| **EL 寫法** | **Java 對應** | **意義** |
+| ----------- | ------------- | -------- |
+| and         | &&            | 且       |
+| or          | `             |          |
+| not         | !             | 非       |
+
+### **EL 邏輯運算範例：**
+
+```
+<c:if test="${x gt 5 and y lt 10}">
+
+  同時符合條件！
+
+</c:if>
+```
+
+
+
+
+
+------
+
+
+
+## **🧠 總結：你說的** **&** **用在哪裡？**
+
+| **語境**      | **運算子** | **意義**              | **建議用法**                 |
+| ------------- | ---------- | --------------------- | ---------------------------- |
+| Java 數值運算 | &          | 位元與（bitwise AND） | 用於數字操作                 |
+| Java 邏輯運算 | &          | AND，不短路           | 不建議，容易造成不必要的運算 |
+| Java 邏輯運算 | &&         | AND，短路             | ✅ **推薦使用**               |
+| EL 表達式     | and        | AND                   | ✅ 用語法關鍵字               |
+
+- **位元運算**
+
+## **ava 常見的 基本位元運算子（6 種）**
+
+| **運算子** | **名稱**    | **說明**                           |
+| ---------- | ----------- | ---------------------------------- |
+| &          | AND         | 兩位皆為 1，結果為 1               |
+| `          | `           | OR                                 |
+| ^          | XOR         | 兩位不同為 1                       |
+| ~          | NOT（補數） | 位元反轉（0 ↔ 1）                  |
+| <<         | 左移        | 所有位元向左移動 n 位，補 0（×2ⁿ） |
+| >>         | 帶符號右移  | 向右移動 n 位，符號位會保留        |
+| >>>        | 無符號右移  | 向右移動 n 位，補 0                |
+
+✅ 總共 7 種基本運算子（不是 6 種）
+
+你說的「6 種」可能是沒有把 >>>（無符號右移）算進去，但在 Java 裡它其實很重要！
+
+
+
+------
+
+
+
+## **🧠 延伸類型（但不是獨立新運算子）**
+
+除了基本的這 7 種，還有一些延伸應用：
+
+### **🔸 複合位元指派運算（語法糖）**
+
+這些是語法簡寫，功能跟上面的一樣，但加了 =：
+
+| **寫法** | **說明**           |
+| -------- | ------------------ |
+| a &= b   | 等同於 a = a & b   |
+| `a       | = b`               |
+| a ^= b   | 等同於 a = a ^ b   |
+| a <<= n  | 等同於 a = a << n  |
+| a >>= n  | 等同於 a = a >> n  |
+| a >>>= n | 等同於 a = a >>> n |
+
+✅ 不算新運算子，僅是簡寫
 
 
 
@@ -3843,7 +3997,7 @@ EL 可以直接存取 JSP 四個範圍的變數：
 
 **el_scope.jsp**
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head><title>EL 範圍變數</title></head>
@@ -3919,7 +4073,7 @@ ApplicationScope：Application 範圍
 
 **el_jstl.jsp**
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -3959,29 +4113,83 @@ ApplicationScope：Application 範圍
 
 ✅ 使用者數量超過 2
 
+#### **fn:length()** **是什麼？**
+
+它是 JSTL 函數庫裡的函數，用來**取得集合或字串的長度**。
+
+
+
+------
+
+
+
+## **📘 用法說明：**
+
+${fn:length(collection)}
+
+### **支援的資料型態：**
+
+| **類型**   | **結果**     |
+| ---------- | ------------ |
+| 字串       | 字元數       |
+| List/Array | 元素個數     |
+| Map        | 鍵值對的數量 |
+
 # **第十章：JSP 標籤庫（JSTL）**
 
 ## **1. JSTL 簡介**
 
-- **JSTL（JavaServer Pages Standard Tag Library） 是一組標準化的 JSP 標籤庫，提供常用功能（流程控制、迴圈、格式化、資料庫存取…）。****
+- **JSTL（JavaServer Pages Standard Tag Library） 是一組標準化的 JSP 標籤庫，提供常用功能（流程控制、迴圈、格式化、資料庫存取…）。**
 
-  **
+  
 
-- **優點：****
+- **優點：**
 
-  **
+  
 
-  - **減少 JSP 中 Java Scriptlet** **<% %>** **的使用。****
+  - **減少 JSP 中 Java Scriptlet** **<% %>** **的使用。**
 
-    **
+    
 
-  - **提升程式可讀性與維護性。****
+  - **提升程式可讀性與維護性。**
 
-    **
+    
 
-  - **搭配 EL（Expression Language） 使用更直覺。****
+  - **搭配 EL（Expression Language） 使用更直覺、可以讓 JSP 更乾淨。**
 
-    **
+    
+    
+  - **EL 是什麼？**
+  
+    **EL（Expression Language）** 允許你用簡單的語法，在 JSP 頁面中存取：
+    
+    - **Java Bean 的屬性**
+    
+      
+    
+    - **集合（List、Map）中的資料**
+    
+      
+    
+    - **request / session / application** 中的變數
+    
+      
+    
+    - **JSTL 函數、邏輯運算、算術運算等**
+    
+    ## **小結：EL 呼叫方法總結表**
+    
+    | **方式**                | **支援度**   | **是否推薦** | **備註**                       |
+    | ----------------------- | ------------ | ------------ | ------------------------------ |
+    | ${user.getName()}       | ❌ 不支援     | ❌            | 會報錯                         |
+    | ${user.name}            | ✅ 支援       | ✅            | 會自動呼叫 getName()           |
+    | ${user.sayHello('Tom')} | ✅（EL 2.2+） | ⚠️ 條件式推薦 | 僅支援較新 Servlet 規範        |
+    | <% user.sayHello() %>   | ✅            | ❌            | 傳統方式，不建議混合 Scriptlet |
+    | Servlet 中處理好        | ✅            | ✅✅           | 最推薦、安全、清晰             |
+    
+    
+    
+    
 
 **JSTL 的 Tag Library 宣告方式：**
 
@@ -3991,6 +4199,7 @@ ApplicationScope：Application 範圍
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 ```
 
+- fmt - > $
 
 
 
@@ -4009,6 +4218,7 @@ ApplicationScope：Application 範圍
 </c:if>
 ```
 
+- “ ”裡面需改' ',讀程式是左到右
 
 
 ### **2.2 多分支** **<c:choose>**
@@ -4055,6 +4265,7 @@ ApplicationScope：Application 範圍
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>
 ```
 
+- 注意格式，大小寫差異
 
 
 ### **3.2 數字格式化**
@@ -4072,7 +4283,103 @@ ApplicationScope：Application 範圍
 <fmt:message key="welcome.message"/>
 ```
 
+i18n = internationalization（國際化)
 
+其中 **"18"** 代表的是單詞 *internationalization* 中「i」和「n」之間的 18 個字母。
+
+**i18n（國際化）** 是指讓你的應用程式可以支持多語言和多地區使用者，這樣一套系統就可以根據使用者的語言設定，自動顯示對應語言的介面和訊息。
+
+
+
+------
+
+
+
+## **🧰 常見技術實現方式：**
+
+### **在 JSP / Java Web 應用中：**
+
+通常會搭配 **ResourceBundle（資源包）** 和 **.properties** **檔案** 來實現 i18n。
+
+### **1. 建立多語言屬性檔案：**
+
+- messages.properties（預設語言，通常英文）
+
+  
+
+- messages_zh.properties（中文）
+
+  
+
+- messages_ja.properties（日文）
+
+  
+
+
+
+
+
+每個檔案的內容像這樣：
+
+**messages.properties**
+
+greeting=Hello
+
+**messages_zh.properties**
+
+greeting=你好
+
+
+
+------
+
+
+
+### **2. 在 JSP 中使用 JSTL i18n 標籤**
+
+首先引入 JSTL 標籤庫：
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+設置語言地區（可從 session、cookie、參數中取得）：
+
+<fmt:setLocale value="zh_TW" />
+
+<fmt:setBundle basename="messages" />
+
+顯示翻譯文字：
+
+<fmt:message key="greeting" />
+
+當語系是 zh_TW 時會顯示「你好」，是英文則顯示「Hello」。
+
+
+
+------
+
+
+
+### **3. 在 Servlet 中設置語言（可選）**
+
+request.setAttribute("javax.servlet.jsp.jstl.fmt.locale.session", new Locale("zh", "TW"));
+
+或者使用使用者的語言偏好：
+
+Locale userLocale = request.getLocale(); // 根據瀏覽器語言自動偵測
+
+
+
+------
+
+
+
+## **✅ 小總結：**
+
+| **項目** | **說明**                                               |
+| -------- | ------------------------------------------------------ |
+| i18n     | 國際化（internationalization）                         |
+| 工具     | .properties 檔案 + ResourceBundle + JSTL <fmt:message> |
+| 好處     | 一份程式、多種語言，便於全球化發展                     |
 
 
 
@@ -4097,7 +4404,7 @@ ApplicationScope：Application 範圍
 ```sql
 <sql:query var="result" dataSource="${db}">
     SELECT * FROM users;
-</sql:query>
+</sql:query>///不建議
 ```
 
 
@@ -4168,11 +4475,54 @@ public class HelloTag extends TagSupport {
 }
 ```
 
+- ## **🧠 核心概念對比（Override vs Overloading）**
 
+| **特性**     | **Override（覆寫）**                           | **Overloading（多載）**                      |
+| ------------ | ---------------------------------------------- | -------------------------------------------- |
+| **基本定義** | **在子類別中修改從父類別繼承來的方法實作**     | **在同一類別中定義多個參數不同的方法版本**   |
+| **關係**     | **涉及「繼承（Inheritance）」**                | **和繼承無關，只是在同類別中重複定義方法名** |
+| **語法特徵** | **方法名稱、參數、回傳型別（需相容）都要匹配** | **方法名稱相同，參數數量或型別不同**         |
+| **註解需求** | **使用** **@Override****（編譯器幫助）**       | **不需要任何註解**                           |
+| **多型支援** | **✅ 是多型的核心**                             | **❌ 不支援多型（不是多型行為）**             |
+
+## 
+
+## **🔧 主要用途比較**
+
+| **用途層面**                 | **Override（覆寫）**                     | **Overloading（多載）**                  |
+| ---------------------------- | ---------------------------------------- | ---------------------------------------- |
+| **修改/擴充 父類功能**       | **✅ 你想要更改父類（或介面）的預設行為** | **❌ 無法修改，只是提供更多方法版本**     |
+| **實現多型（Polymorphism）** | **✅ 透過父類呼叫子類方法**               | **❌ 多載在編譯時決定，不具備多型特性**   |
+| **API 易用性**               | **❌ 通常是內部設計用途**                 | **✅ 提升使用者體驗，例如** **println()** |
+| **與抽象類別/介面搭配**      | **✅ 常用來實作抽象方法或介面方法**       | **❌ 不適用**                             |
+| **主要解決的問題**           | **繼承後功能不符需求，需要改寫**         | **同一功能適用多組參數的情況**           |
+
+## **🧪 技術比較（進階）**
+
+| **比較項目**         | **Override**                                    | **Overloading**                        |
+| -------------------- | ----------------------------------------------- | -------------------------------------- |
+| **允許不同回傳型別** | **✅ 可協變（covariant return types）**          | **✅ 但不能僅靠回傳型別區分**           |
+| **決定時機**         | **執行階段（runtime）決定調用哪個方法（多型）** | **編譯時（compile time）根據參數決定** |
+| **是否支援多型**     | **✅ 是（可依對象實際類型選方法）**              | **❌ 編譯時已固定**                     |
+
+## 
+
+## **❗ 常見誤解澄清**
+
+| **誤解**                             | **真相**                                                |
+| ------------------------------------ | ------------------------------------------------------- |
+| **多載方法名稱一樣就是 Override**    | **❌ 錯，Override 還需參數也完全一致**                   |
+| **Overloading 需要加** **@overload** | **❌ 錯，Java 根本沒有這個註解**                         |
+| **Override 只是另一種多載**          | **❌ 不是，多載與繼承無關，Override 是多型實現的一部分** |
+
+## **✅ 總結一句話比較：**
+
+**Override 是用來「改寫繼承來的方法行為」，是支援多型的核心；****
+** **Overloading 是用來「定義多種方法版本以支援不同參數」，是為了讓程式碼更靈活易用。**
 
 ### **5.3 JSP 使用**
 
-```java
+```jsp
 <%@ taglib prefix="my" uri="http://example.com/mytag" %>
 <my:hello/>
 ```
@@ -4239,12 +4589,57 @@ public class HelloTag extends TagSupport {
 
 - **把處理後的結果傳給 JSP**
 
+
+
+## **3.補充**
+
+## **為什麼 Web 應用沒有** **main()** **方法？**
+
+### **1. Web 應用的運行機制**
+
+- **Web 應用是被 Web 伺服器（如 Tomcat、Jetty）管理和啟動的。**
+
   
+
+- **伺服器會負責載入你的應用程式，監聽 HTTP 請求，並根據 URL 對應到你的 Servlet、JSP 等。**
+
+  
+
+- **因此，不需要你寫一個程式進入點（**main**方法），而是由伺服器容器啟動應用。**
+
+  
+
+### **2. 對比獨立 Java 應用**
+
+- **獨立的 Java 程式執行時，JVM 會從** **public static void main(String[] args)** **這個方法開始執行。**
+
+  
+
+- **但是 Web 應用是放到伺服器裡面，伺服器本身有自己的** **main** **方法來啟動整個服務，Web 應用本身只提供 Servlet、Listener 等元件，並沒有自己的** **main**。
+
+## **總結**
+
+| **類型**           | **是否需要** **main()** | **執行方式**                            |
+| ------------------ | ----------------------- | --------------------------------------- |
+| **傳統 Web 應用**  | **❌ 不需要**            | **由 Web 伺服器啟動並管理**             |
+| **獨立 Java 程式** | **✅ 需要**              | **JVM 從** **main** **方法開始執行**    |
+| **Spring Boot**    | **✅ 需要**              | **自己有** **main****，內嵌伺服器啟動** |
+
+## **主要差異**
+
+| **方面**           | **Web 應用（WAR）**                      | **JAR 文件**                                   |
+| ------------------ | ---------------------------------------- | ---------------------------------------------- |
+| **包裝格式**       | **WAR（Web Archive）**                   | **JAR（Java Archive）**                        |
+| **內容**           | **JSP、Servlet、HTML、JavaScript、配置** | **Java 類、資源文件、配置**                    |
+| **運行環境**       | **部署在 Web/Application 伺服器上**      | **Java 虛擬機（JVM），或作為函式庫使用**       |
+| **是否可直接運行** | **通常需要 Web 伺服器**                  | **可執行 JAR 可以直接** **java -jar** **運行** |
+| **典型用途**       | **網站、API 服務**                       | **函式庫、工具、獨立應用**                     |
 
 **範例：**
 
 ```java
-@WebServlet("/login")
+@WebServlet("/login")///注意不能重復,現在的網頁偏好這種方法,可以不用再回去設定xml檔
+
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws IOException, ServletException {
@@ -4314,7 +4709,7 @@ public class User {
     private String password;
     private String email;
 
-    // Getter & Setter
+    // Getter & Setter//以下不須打
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
@@ -4328,6 +4723,56 @@ public class User {
 
 
 
+- **以下不須打,在eclipse**
+
+**在eclipse mm.java->**
+
+mm.java(class)
+
+```java
+package com.example.servlet;
+
+public class mm {
+	private long id;
+	private int name;
+	
+
+}
+```
+
+
+
+**->點右鍵->resource->generate getter and setter->勾選全部值（id,name）->generate**
+
+**輸出結果：**
+
+mm.java(class)
+
+```java
+package com.example.servlet;
+public class mm {
+	private long id;
+	private int name;
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public int getName() {
+		return name;
+	}
+	public void setName(int name) {
+		this.name = name;
+	}
+	
+}
+```
+
+
+
+
+
 #### **DAO（資料存取層）**
 
 ```java
@@ -4336,11 +4781,11 @@ import java.sql.*;
 public class UserDAO {
     private final String URL = "jdbc:mysql://localhost:3306/testdb";
     private final String USER = "root";
-    private final String PASSWORD = "1234";
+    private final String PASSWORD = "1234";//不建議
 
     public User login(String username, String password) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String sql = "SELECT * FROM users WHERE username=? AND password=?";
+            String sql = "SELECT * FROM users WHERE username=? AND password=?";//因為使用PreparedStatement需要？ 而且PreparedStatement使用在sql會檢查
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password);
@@ -4386,7 +4831,7 @@ public class UserDAO {
 
 ### **(1)** **login.jsp** **(表單)**
 
-```java
+```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
